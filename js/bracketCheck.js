@@ -1,35 +1,48 @@
-function bracketCheck(brackStrings) {
-// Returns array of YES/NO values, indicating whether or not the
-// inputted strings of brackets are closed
+var matchMap = {
+  '{': '}',
+  '[': ']',
+  '(': ')'
+};
 
-  var bracketMatch = {
-    '{': '}',
-    '[': ']',
-    '(': ')'
-  };
+function bracketCheck(testStrings) {
+// Returns array of boolean values, indicating whether or not the
+// inputted strings of brackets are closed according to closer map
   var results = [];
-  // Go through all the bracket strings
-  brackStrings.forEach(function(brackStr) {
-    var stack = [];
-    var closed = true;
-    var brackets = brackStr.split('');
-    for (var i = 0; i < brackStr.length; i++) {
-      if (brackets[i] == '{' || brackets[i] == '[' || brackets[i] == '(') {
-        stack.push(brackets[i]);
-      } else if (brackets[i] == '}' || brackets[i] == ']' || brackets[i] == ')') {
-        var openBracket = stack.pop();
-        // Test for matching closing bracket to most recently opened bracket
-        if (!(bracketMatch[openBracket] == brackets[i])) {
+
+  testStrings.forEach(function(str) {
+    var closed = true;  // Initially assume all brackets are closed
+    var currChar;       // Current character in string
+    var openBracket;    // Currently open bracket
+    var stack = [];     // Stack of open brackets
+
+    var chars = str.split('');
+    for (var pos = 0; pos < str.length; pos++) {
+      currChar = chars[pos];
+      if (currChar == '{' || currChar == '[' || currChar == '(') {
+        // Add open bracket to stack
+        stack.push(currChar);
+      } else if (currChar == '}' || currChar == ']' || currChar == ')') {
+        openBracket = stack.pop();
+        // Test if current character matches currently open bracket
+        if ( !isMatch(openBracket, currChar, matchMap) ) {
           closed = false;
         }
       }
     }
-    // Put together results for this bracket string
+
+    // Append results for this string
     if (closed && stack.length == 0) {
       results.push(true);
     } else {
       results.push(false);
     }
+
   });
   return results;
+}
+
+function isMatch(opener, closer, openCloseMap) {
+  // Returns true if given strings form a complete closed parenthesis,
+  // based on given map
+  return openCloseMap[opener] == closer;
 }
