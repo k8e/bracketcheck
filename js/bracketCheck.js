@@ -1,4 +1,4 @@
-function bracketCheck(brackStrings) { 
+function bracketCheck(brackStrings) {
 // Returns array of YES/NO values, indicating whether or not the
 // inputted strings of brackets are closed
 
@@ -13,7 +13,7 @@ function bracketCheck(brackStrings) {
     var stack = [];
     var closed = true;
     var brackets = brackStr.split('');
-    for (var i = 0; i < str.length; i++) {
+    for (var i = 0; i < brackStr.length; i++) {
       if (brackets[i] == '{' || brackets[i] == '[' || brackets[i] == '(') {
         stack.push(brackets[i]);
       } else if (brackets[i] == '}' || brackets[i] == ']' || brackets[i] == ')') {
@@ -26,9 +26,9 @@ function bracketCheck(brackStrings) {
     }
     // Put together results for this bracket string
     if (closed && stack.length == 0) {
-      results.push("YES");
+      results.push(true);
     } else {
-      results.push("NO");
+      results.push(false);
     }
   });
   return results;
