@@ -1,4 +1,4 @@
-function bracketTest(brackStrings) {
+function bracketCheck(brackStrings) { 
 // Returns array of YES/NO values, indicating whether or not the
 // inputted strings of brackets are closed
 
